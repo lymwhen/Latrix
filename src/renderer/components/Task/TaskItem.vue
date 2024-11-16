@@ -105,6 +105,7 @@
     background-color: $--subnav-active-text-color;
     opacity: .1;
     z-index: -1;
+    transition: width .9s linear;
   }
 }
 .task-item {
