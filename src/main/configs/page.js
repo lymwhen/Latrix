@@ -4,8 +4,9 @@ export default {
   index: {
     attrs: {
       title: 'Motrix',
-      width: 1024,
-      height: 768,
+      // 默认窗体大小
+      width: 740,
+      height: 506,
       minWidth: 478,
       minHeight: 420,
       transparent: is.macOS()

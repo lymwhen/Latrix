@@ -170,7 +170,8 @@ iframe {
 }
 
 .subnav-inner {
-  margin-top: 44px;
+  // 菜单栏顶部位置
+  margin-top: 32px;
   padding: 0 16px;
   user-select: none;
 
@@ -180,6 +181,16 @@ iframe {
     font-weight: normal;
     line-height: 24px;
     margin: 0 0 28px;
+  }
+// logo样式
+  .la-logo-h3{
+    color: $--subnav-active-text-color;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    margin: 0 0 28px;
+    text-align: center;
+    opacity: 0.8;
   }
 
   ul {
@@ -234,9 +245,10 @@ iframe {
 
 .panel {
   background: $--panel-background;
+  // 面板标题（下载中）位置
   .panel-header {
     position: relative;
-    padding: 44px 0 12px;
+    padding: 32px 0 9px;
     margin: 0 16px;
     border-bottom: 2px solid $--panel-border-color;
     user-select: none;
@@ -294,24 +306,25 @@ iframe {
 }
 
 @media only screen and (min-width: 568px) {
+  // 面板（下载、设置等面板）边距
   .panel {
     .panel-header {
-      margin-left: 36px;
-      margin-right: 36px;
+      margin-left: 16px;
+      margin-right: 16px;
     }
   }
   .task-list {
-    padding-left: 36px;
-    padding-right: 36px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
   .form-preference {
-    padding-left: 36px;
+    padding-left: 16px;
   }
   .form-actions {
-    padding: 24px 36px;
+    padding: 24px 16px;
   }
   .mo-speedometer {
-    right: 36px;
+    right: 16px;
   }
   .hidden-sm-and-up {
     display: none !important;
@@ -332,5 +345,39 @@ iframe {
 @media only screen and (min-width: 792px) {
   .hidden-md-and-up {
     display: none !important;
+  }
+}
+
+// 默认隐藏最左侧栏，没什么用，又黑
+@media only screen and (min-width: 0px) {
+  .hidden-sm-and-down {
+    display: none !important;
+  }
+}
+
+// 垂直居中布局，用于设置返回按钮和标题
+.la-vertical-center-layout {
+  display: flex;
+  align-items: center;
+}
+
+// 标题按钮（返回）
+.la-menu-button {
+  display: inherit;
+  margin-right: 8px;
+  border-radius: 3px;
+  padding: 4px;
+  cursor: pointer;
+
+  &:hover,
+  &.active {
+    background-color: $--subnav-active-background;
+    color: $--subnav-active-text-color;
+
+    i,
+    span,
+    svg {
+      color: $--subnav-active-text-color;
+    }
   }
 }

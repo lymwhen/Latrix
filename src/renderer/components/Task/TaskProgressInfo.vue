@@ -1,26 +1,7 @@
 <template>
-  <el-row class="task-progress-info">
-    <el-col
-      class="task-progress-info-left"
-      :xs="12"
-      :sm="7"
-      :md="6"
-      :lg="6"
-    >
-      <div v-if="task.completedLength > 0 || task.totalLength > 0">
-        <span>{{ task.completedLength | bytesToSize(2) }}</span>
-        <span v-if="task.totalLength > 0"> / {{ task.totalLength | bytesToSize(2) }}</span>
-      </div>
-    </el-col>
-    <el-col
-      class="task-progress-info-right"
-      v-if="isActive"
-      :xs="12"
-      :sm="17"
-      :md="18"
-      :lg="18"
-    >
-      <div class="task-speed-info">
+  <!-- 调整下载信息（大小、速度）样式 -->
+  <div class="task-progress-info">
+      <div class="task-speed-info" v-if="task.status !== TASK_STATUS.COMPLETE">
         <div class="task-speed-text" v-if="isBT">
           <i><mo-icon name="arrow-up" width="10" height="14" /></i>
           <span>{{ task.uploadSpeed | bytesToSize }}/s</span>
@@ -53,8 +34,12 @@
           <span>{{ task.connections }}</span>
         </div>
       </div>
-    </el-col>
-  </el-row>
+      <div class="task-byte-info" v-if="task.completedLength > 0 || task.totalLength > 0">
+        <span v-if="task.status !== TASK_STATUS.COMPLETE">{{ task.completedLength | bytesToSize(2) }}</span>
+        <span v-if="task.status !== TASK_STATUS.COMPLETE"> / </span>
+        <span v-if="task.totalLength > 0">{{ task.totalLength | bytesToSize(2) }}</span>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -76,6 +61,11 @@
     props: {
       task: {
         type: Object
+      }
+    },
+    data () {
+      return {
+        TASK_STATUS: TASK_STATUS
       }
     },
     computed: {
@@ -102,11 +92,11 @@
 
 <style lang="scss">
 .task-progress-info {
+  display: inline-flex;
   font-size: 0.75rem;
   line-height: 0.875rem;
   min-height: 0.875rem;
   color: #9B9B9B;
-  margin-top: 0.5rem;
   i {
     font-style: normal;
   }
@@ -118,6 +108,9 @@
 .task-progress-info-right {
   min-height: 0.875rem;
   text-align: right;
+}
+.task-byte-info {
+  margin-left: 1rem;
 }
 .task-speed-info {
   font-size: 0;

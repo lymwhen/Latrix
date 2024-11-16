@@ -1,6 +1,7 @@
 <template>
   <el-container class="main panel" direction="horizontal">
-    <el-aside width="200px" class="subnav hidden-xs-only">
+    <!-- 缩短侧栏宽度 -->
+    <el-aside width="150px" class="subnav hidden-xs-only">
       <router-view name="subnav" />
     </el-aside>
     <router-view name="form" />

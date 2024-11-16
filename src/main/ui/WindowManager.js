@@ -1,7 +1,7 @@
 import { join } from 'node:path'
 import { EventEmitter } from 'node:events'
 import { debounce } from 'lodash'
-import { app, shell, screen, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow } from 'electron'
 import is from 'electron-is'
 
 import pageConfig from '../configs/page'
@@ -10,8 +10,9 @@ import logger from '../core/Logger'
 const baseBrowserOptions = {
   titleBarStyle: 'hiddenInset',
   show: false,
-  width: 1024,
-  height: 768,
+  // 默认窗体大小
+  width: 740,
+  height: 506,
   backgroundColor: '#fff',
   webPreferences: {
     nodeIntegration: true
@@ -56,9 +57,10 @@ export default class WindowManager extends EventEmitter {
     }
 
     // Optimized for small screen users
-    const { width, height } = screen.getPrimaryDisplay().workAreaSize
-    const widthScale = width >= 1280 ? 1 : 0.875
-    const heightScale = height >= 800 ? 1 : 0.875
+    // const { width, height } = screen.getPrimaryDisplay().workAreaSize
+    // 奇怪的大小"优化"
+    const widthScale = 1
+    const heightScale = 1
     result.attrs.width *= widthScale
     result.attrs.height *= heightScale
 
