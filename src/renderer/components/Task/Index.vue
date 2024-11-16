@@ -38,7 +38,7 @@
   import { mapState } from 'vuex'
 
   import { commands } from '@/components/CommandManager/instance'
-  import { ADD_TASK_TYPE } from '@shared/constants'
+  import { ADD_TASK_TYPE, TASK_STATUS } from '@shared/constants'
   import TaskSubnav from '@/components/Subnav/TaskSubnav'
   import TaskActions from '@/components/Task/TaskActions'
   import TaskList from '@/components/Task/TaskList'
@@ -288,10 +288,12 @@
       },
       handleDeleteTask (payload) {
         const { task, taskName, deleteWithFiles } = payload
+        console.log(task, taskName, deleteWithFiles)
         const { noConfirmBeforeDelete } = this
 
-        if (noConfirmBeforeDelete) {
-          this.removeTask(task, taskName, deleteWithFiles)
+        // 启用了noConfirmBeforeDelete或未完成的任务，点击删除无需确认，连同文件删除
+        if (noConfirmBeforeDelete || task.status !== TASK_STATUS.COMPLETE) {
+          this.removeTask(task, taskName, true)
           return
         }
 
