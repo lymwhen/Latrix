@@ -1,6 +1,7 @@
 <template>
   <nav class="subnav-inner">
-    <h3>{{ title }}</h3>
+    <!-- 设置页面标题和返回按钮 -->
+    <h3 class="la-vertical-center-layout"><div class="la-menu-button" @click="navPage('/task')"><mo-icon name='la-menu-back' width="20" height="20" /></div><span>{{ title }}</span></h3>
     <ul>
       <li
         @click="() => nav('basic')"
@@ -37,6 +38,7 @@
   import '@/components/Icons/preference-basic'
   import '@/components/Icons/preference-advanced'
   import '@/components/Icons/preference-lab'
+  import '@/components/Icons/la-menu-back'
 
   export default {
     name: 'mo-preference-subnav',
@@ -52,6 +54,13 @@
       }
     },
     methods: {
+      navPage (page) {
+        this.$router.push({
+          path: page
+        }).catch(err => {
+          console.log(err)
+        })
+      },
       nav (category = 'basic') {
         this.$router.push({
           path: `/preference/${category}`

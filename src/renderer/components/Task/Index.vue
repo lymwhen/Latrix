@@ -3,8 +3,9 @@
     class="main panel"
     direction="horizontal"
   >
+  <!-- 缩短侧栏宽度 -->
     <el-aside
-      width="200px"
+      width="150px"
       class="subnav hidden-xs-only"
     >
       <mo-task-subnav :current="status" />

@@ -162,7 +162,8 @@
 <style lang="scss">
 .task-actions {
   position: absolute;
-  top: 44px;
+  // 调整操作按钮位置
+  top: 34px;
   right: 0;
   height: 24px;
   padding: 0;

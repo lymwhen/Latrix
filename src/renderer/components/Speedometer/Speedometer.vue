@@ -53,7 +53,8 @@
     padding: 5px 10px 5px 48px;
     border-radius: 100px;
     transition: $--all-transition;
-    border: 1px solid $--speedometer-border-color;
+    // 右下角速度指示器样式
+    box-shadow: 1px 1px 3px 1px rgb(0 0 0 / 10%);
     background: $--speedometer-background;
     &:hover {
       border-color: $--speedometer-hover-border-color;

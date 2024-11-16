@@ -18,7 +18,7 @@ $--aside-text-color: #fff !default;
 
 /* SubNav
 -------------------------- */
-$--subnav-background: #F4F5F7 !default;
+$--subnav-background: #F4F5F760 !default;
 $--subnav-title-color: $--color-text-primary !default;
 $--subnav-action-color: #4D515A !default;
 $--subnav-text-color: #4D515A !default;
@@ -34,7 +34,7 @@ $--main-background: $--color-white !default;
 -------------------------- */
 $--panel-background: $--color-white !default;
 $--panel-title-color: $--color-text-primary !default;
-$--panel-border-color: rgba(0, 0, 0, 0.1) !default;
+$--panel-border-color: rgba(0, 0, 0, 0.05) !default;
 
 /* Form Actions
 -------------------------- */
@@ -42,7 +42,7 @@ $--form-actions-background: $--color-white !default;
 
 /* Task
 -------------------------- */
-$--task-action-color: #4d515a !default;
+$--task-action-color: #666666 !default;
 $--task-action-hover-color: $--color-primary !default;
 $--task-action-disabled-color: rgba(77, 81, 90, 0.5) !default;
 $--task-item-background: #fff !default;

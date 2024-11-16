@@ -15,8 +15,9 @@ $--color-transition-base: color .25s cubic-bezier(.645,.045,.355,1) !default;
 
 /* Color
 -------------------------- */
-/// color|1|Brand Color|0
-$--color-primary: #5b5bfa !default;
+/// color|1|Brand Color|0 default:#5b5bfa,element-ui:#409eff
+/// 主强调色
+$--color-primary: #FF4081 !default;
 /// color|1|Background Color|4
 $--color-white: #FFFFFF !default;
 /// color|1|Background Color|4
@@ -49,7 +50,8 @@ $--color-warning-lighter: mix($--color-white, $--color-warning, 90%) !default;
 $--color-danger-lighter: mix($--color-white, $--color-danger, 90%) !default;
 $--color-info-lighter: mix($--color-white, $--color-info, 90%) !default;
 /// color|1|Font Color|2
-$--color-text-primary: #303133 !default;
+/// 标题颜色
+$--color-text-primary: #666666 !default;
 /// color|1|Font Color|2
 $--color-text-regular: #606266 !default;
 /// color|1|Font Color|2

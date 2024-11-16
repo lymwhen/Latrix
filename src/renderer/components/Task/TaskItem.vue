@@ -1,17 +1,14 @@
 <template>
-  <div :key="task.gid" class="task-item" v-on:dblclick="onDbClick">
-    <div class="task-name" :title="taskFullName">
-      <span>{{ taskFullName }}</span>
-    </div>
-    <mo-task-item-actions mode="LIST" :task="task" />
-    <div class="task-progress">
-      <mo-task-progress
-        :completed="Number(task.completedLength)"
-        :total="Number(task.totalLength)"
-        :status="taskStatus"
-      />
+  <!-- 调整下载任务样式 -->
+  <div class="ls-task-item-wrapper">
+    <div :key="task.gid" class="task-item" v-on:dblclick="onDbClick">
+      <div class="task-name" :title="taskFullName">
+        <span>{{ taskFullName }}</span>
+      </div>
+      <mo-task-item-actions mode="LIST" :task="task" />
       <mo-task-progress-info :task="task" />
     </div>
+    <div class="la-task-progress" v-if="task.status !== TASK_STATUS.COMPLETE" :style="{ width: `${(Number(task.completedLength) / Number(task.totalLength)) * 100}%` }"></div>
   </div>
 </template>
 
@@ -33,6 +30,11 @@
     props: {
       task: {
         type: Object
+      }
+    },
+    data () {
+      return {
+        TASK_STATUS: TASK_STATUS
       }
     },
     computed: {
@@ -86,22 +88,49 @@
 </script>
 
 <style lang="scss">
+// 调整下载任务样式
+.ls-task-item-wrapper {
+  position: relative;
+  border-radius: 3px;
+  margin-bottom: 12px;
+  z-index: 2;
+  overflow: hidden;
+  box-shadow: 1px 1px 3px 1px #00000014;
+
+  .la-task-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: $--subnav-active-text-color;
+    opacity: .1;
+    z-index: -1;
+  }
+}
 .task-item {
   position: relative;
-  min-height: 78px;
-  padding: 16px 12px;
-  background-color: $--task-item-background;
-  border: 1px solid $--task-item-border-color;
-  border-radius: 6px;
-  margin-bottom: 16px;
+  display: flex;
+  padding: 6px 12px;
+  border: 2px solid #FFFFFF00;
   transition: $--border-transition-base;
-  &:hover {
-    border-color: $--task-item-hover-border-color;
-  }
+  align-items: center;
+
   .task-item-actions {
-    position: absolute;
-    top: 16px;
-    right: 12px;
+    display: none;
+  }
+  .task-progress-info {
+    display: inline-flex;
+  }
+
+  &:hover {
+    border: 2px solid $--task-item-hover-border-color;
+
+    .task-item-actions {
+      display: inline;
+    }
+    .task-progress-info {
+      display: none;
+    }
   }
 }
 .selected .task-item {
@@ -109,10 +138,9 @@
 }
 .task-name {
   color: #505753;
-  margin-bottom: 1.5rem;
-  margin-right: 200px;
   word-break: break-all;
   min-height: 26px;
+  flex: 1;
   &> span {
     font-size: 14px;
     line-height: 26px;
