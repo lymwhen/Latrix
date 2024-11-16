@@ -52,6 +52,7 @@ const mutations = {
 }
 
 const actions = {
+  // 这里的currentList参数太混淆了，实际上是status：active/waiting/stopped
   changeCurrentList ({ commit, dispatch }, currentList) {
     commit('CHANGE_CURRENT_LIST', currentList)
     commit('UPDATE_SELECTED_GID_LIST', [])
@@ -60,7 +61,9 @@ const actions = {
   fetchList ({ commit, state }) {
     return api.fetchTaskList({ type: state.currentList })
       .then((data) => {
-        commit('UPDATE_TASK_LIST', data)
+        // aria2 jsonrpc并没有提供排序方式参数，默认是按照时间升序来的
+        // 所以如果是已完成的任务，翻转数组，最新的任务排在前面
+        commit('UPDATE_TASK_LIST', state.currentList === 'stopped' ? data.reverse() : data)
 
         const { selectedGidList } = state
         const gids = data.map((task) => task.gid)

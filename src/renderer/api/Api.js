@@ -205,7 +205,7 @@ export default class Api {
   }
 
   fetchDownloadingTaskList (params = {}) {
-    const { offset = 0, num = 20, keys } = params
+    const { offset = 0, num = 100, keys } = params
     const activeArgs = compactUndefined([keys])
     const waitingArgs = compactUndefined([offset, num, keys])
     return new Promise((resolve, reject) => {
@@ -224,13 +224,14 @@ export default class Api {
   }
 
   fetchWaitingTaskList (params = {}) {
-    const { offset = 0, num = 20, keys } = params
+    const { offset = 0, num = 100, keys } = params
     const args = compactUndefined([offset, num, keys])
     return this.client.call('tellWaiting', ...args)
   }
 
   fetchStoppedTaskList (params = {}) {
-    const { offset = 0, num = 20, keys } = params
+    // 列表调用时，没有翻页机制，所以一次性多加载一下吧。。。
+    const { offset = 0, num = 100, keys } = params
     const args = compactUndefined([offset, num, keys])
     return this.client.call('tellStopped', ...args)
   }
