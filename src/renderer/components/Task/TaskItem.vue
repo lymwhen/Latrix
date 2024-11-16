@@ -115,6 +115,7 @@
   border: 2px solid #FFFFFF00;
   transition: $--border-transition-base;
   align-items: center;
+  min-height: 26px;
 
   .task-item-actions {
     display: none;
@@ -140,11 +141,10 @@
 .task-name {
   color: #505753;
   word-break: break-all;
-  min-height: 26px;
   flex: 1;
   &> span {
     font-size: 14px;
-    line-height: 26px;
+    line-height: 20px;
     overflow : hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
