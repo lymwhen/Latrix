@@ -3,7 +3,8 @@
   <div class="ls-task-item-wrapper">
     <div :key="task.gid" class="task-item" v-on:dblclick="onDbClick">
       <div class="task-name" :title="taskFullName">
-        <span>{{ taskFullName }}</span>
+        <!-- 下载异常时，名称显示为红色 -->
+        <span :class="{'task-error': task.status === TASK_STATUS.ERROR }">{{ taskFullName }}</span>
       </div>
       <mo-task-item-actions mode="LIST" :task="task" />
       <mo-task-progress-info :task="task" />
@@ -111,7 +112,7 @@
 .task-item {
   position: relative;
   display: flex;
-  padding: 6px 12px;
+  padding: 4px 10px;
   border: 2px solid #FFFFFF00;
   transition: $--border-transition-base;
   align-items: center;
@@ -139,7 +140,7 @@
   border-color: $--task-item-hover-border-color;
 }
 .task-name {
-  color: #505753;
+  color: $--color-text-primary;
   word-break: break-all;
   flex: 1;
   &> span {
@@ -150,6 +151,10 @@
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+  }
+
+  .task-error {
+    color: $--color-danger;
   }
 }
 </style>

@@ -18,6 +18,8 @@
   </mo-drag-select>
   <div class="no-task" v-else>
     <div class="no-task-inner">
+      <!-- 调整无任务时图片 -->
+      <mo-icon name="la-no-task" width="100" height="100" /><br><br>
       {{ $t('task.no-task') }}
     </div>
   </div>
@@ -28,6 +30,7 @@
   import { cloneDeep } from 'lodash'
   import DragSelect from '@/components/DragSelect/Index'
   import TaskItem from './TaskItem'
+  import '@/components/Icons/la-no-task'
 
   export default {
     name: 'mo-task-list',
@@ -74,6 +77,7 @@
   box-sizing: border-box;
 }
 .no-task {
+  position: relative;
   display: flex;
   height: 100%;
   text-align: center;
@@ -84,8 +88,10 @@
   user-select: none;
 }
 .no-task-inner {
-  width: 100%;
-  padding-top: 360px;
-  background: transparent url('~@/assets/no-task.svg') top center no-repeat;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: .6;
 }
 </style>

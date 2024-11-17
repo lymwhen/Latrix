@@ -189,33 +189,31 @@
 </script>
 
 <style lang="scss">
+// 调整任务项操作样式
 .task-item-actions {
-  // width: 28px;
   height: 24px;
-  padding: 0 10px;
+  padding: 0;
   margin: 0;
   overflow: hidden;
   user-select: none;
   cursor: default;
   text-align: right;
   direction: rtl;
-  border: 1px solid $--task-item-action-border-color;
   color: $--task-item-action-color;
-  background-color: $--task-item-action-background;
-  border-radius: 14px;
   transition: $--all-transition;
-  &:hover {
-    border-color: $--task-item-action-hover-border-color;
-    color: $--task-item-action-hover-color;
-    background-color: $--task-item-action-hover-background;
-    width: auto;
-  }
+  // 调整任务项操作hover样式
   &> .task-item-action {
     display: inline-block;
     padding: 5px;
     margin: 0 4px;
     font-size: 0;
     cursor: pointer;
+    border-radius: 4px;
+    transition: $--all-transition;
+    &:hover {
+      color: $--task-item-action-hover-color;
+      background-color: $--task-item-action-hover-background;
+    }
     i {
       display: inline-block;
     }
