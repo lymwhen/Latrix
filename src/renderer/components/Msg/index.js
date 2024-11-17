@@ -9,6 +9,9 @@ export default {
           if (!(arg instanceof Object)) {
             arg = { message: arg }
           }
+          if (!arg.type || ['info', 'success'].includes(arg.type)) {
+            arg.duration = 1200
+          }
           const task = {
             run () {
               obj[prop]({

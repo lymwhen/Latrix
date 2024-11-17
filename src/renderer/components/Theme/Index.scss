@@ -13,3 +13,10 @@
 /* Theme Dark
 -------------------------- */
 @import './Dark.scss';
+
+.el-message {
+    border-radius: 3px;
+    border-width: 0px;
+    padding: 5px 5px 5px 10px;
+    opacity: .65;
+}
