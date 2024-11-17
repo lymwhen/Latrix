@@ -47,13 +47,14 @@ $--task-action-hover-color: $--color-primary !default;
 $--task-action-disabled-color: rgba(77, 81, 90, 0.5) !default;
 $--task-item-background: #fff !default;
 $--task-item-border-color: #ccc !default;
-$--task-item-hover-border-color: $--color-primary !default;
-$--task-item-hover-background: $--color-primary !default;
+// 调整主强调色在用于背景、边框时的透明度
+$--task-item-hover-border-color: rgba($--color-primary, 0.7) !default;
+$--task-item-hover-background: rgba($--color-primary, 0.7) !default;
 $--task-item-text-color: #505753 !default;
 $--task-item-action-background: #fff !default;
-$--task-item-action-hover-background: $--color-primary !default;
+$--task-item-action-hover-background: rgba($--color-primary, 0.7) !default;
 $--task-item-action-border-color: #F5F5F5 !default;
-$--task-item-action-hover-border-color: $--color-primary !default;
+$--task-item-action-hover-border-color: rgba($--color-primary, 0.7) !default;
 $--task-item-action-color: #9B9B9B !default;
 $--task-item-action-hover-color: #fff !default;
 $--no-task-color: #eee !default;

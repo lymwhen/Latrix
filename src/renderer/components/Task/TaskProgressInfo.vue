@@ -91,12 +91,13 @@
 </script>
 
 <style lang="scss">
+// 调整下载速度样式
 .task-progress-info {
   display: inline-flex;
   font-size: 0.75rem;
   line-height: 0.875rem;
   min-height: 0.875rem;
-  color: #9B9B9B;
+  color: $--color-text-primary;
   i {
     font-style: normal;
   }
@@ -110,7 +111,7 @@
   text-align: right;
 }
 .task-byte-info {
-  margin-left: 1rem;
+  margin-left: 0.8rem;
 }
 .task-speed-info {
   font-size: 0;
@@ -120,6 +121,7 @@
     line-height: 0.875rem;
     vertical-align: middle;
     display: inline-block;
+    color: $--color-text-third;
     &:first-of-type {
       margin-left: 0;
     }

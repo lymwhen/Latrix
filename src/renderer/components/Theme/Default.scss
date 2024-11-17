@@ -190,7 +190,7 @@ iframe {
     line-height: 24px;
     margin: 0 0 28px;
     text-align: center;
-    opacity: 0.8;
+    opacity: 0.7;
   }
 
   ul {
@@ -206,6 +206,8 @@ iframe {
       line-height: 20px;
       border-radius: 3px;
       cursor: pointer;
+      // 调整菜单样式
+      opacity: .8;
 
       i,
       span {
