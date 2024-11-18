@@ -302,7 +302,11 @@ export default class Application extends EventEmitter {
           'all-proxy': server,
           'no-proxy': bypass
         }
-        : {}
+        : {
+          'all-proxy': '',
+          'no-proxy': ''
+        }
+      logger.info(`[Motrix] detected ${key} value change event msg:`, system)
       this.configManager.setSystemConfig(system)
       this.engineClient.call('changeGlobalOption', system)
     })
