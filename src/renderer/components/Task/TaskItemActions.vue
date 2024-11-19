@@ -1,34 +1,42 @@
 <template>
   <ul :key="task.gid" class="task-item-actions" v-on:dblclick.stop="() => null">
-    <li v-for="action in taskActions" :key="action" class="task-item-action">
-      <i v-if="action ==='PAUSE'" @click.stop="onPauseClick">
+    <template v-for="action in taskActions">
+      <li class="task-item-action" :key="action" v-if="action ==='PAUSE'" @click.stop="onPauseClick">
         <mo-icon name="task-pause-line" width="14" height="14" />
-      </i>
-      <i v-if="action ==='STOP'" @click.stop="onStopClick">
+      </li>
+      <li class="task-item-action" :key="action" v-if="action ==='STOP'" @click.stop="onStopClick">
         <mo-icon name="task-stop-line" width="14" height="14" />
-      </i>
-      <i v-if="action === 'RESUME'" @click.stop="onResumeClick">
+      </li>
+      <li class="task-item-action" :key="action" v-if="action === 'RESUME'" @click.stop="onResumeClick">
         <mo-icon name="task-start-line" width="14" height="14" />
-      </i>
-      <i v-if="action === 'RESTART'" @click.stop="onRestartClick">
+      </li>
+      <li class="task-item-action" :key="action" v-if="action === 'RESTART'" @click.stop="onRestartClick">
         <mo-icon name="task-restart" width="14" height="14" />
-      </i>
-      <i v-if="action === 'DELETE'" @click.stop="onDeleteClick">
+      </li>
+      <li class="task-item-action" :key="action" v-if="action === 'DELETE'" @click.stop="onDeleteClick">
         <mo-icon name="delete" width="14" height="14" />
-      </i>
-      <i v-if="action === 'TRASH'" @click.stop="onTrashClick">
+      </li>
+      <li class="task-item-action" :key="action" v-if="action === 'TRASH'" @click.stop="onTrashClick">
         <mo-icon name="trash" width="14" height="14" />
-      </i>
-      <i v-if="action ==='FOLDER'" @click.stop="onFolderClick">
+      </li>
+      <li class="task-item-action" :key="action" v-if="action ==='FOLDER'" @click.stop="onFolderClick">
         <mo-icon name="folder" width="14" height="14" />
-      </i>
-      <i v-if="action ==='LINK'" @click.stop="onLinkClick">
+      </li>
+      <li class="task-item-action" :key="action" v-if="action ==='LINK'" @click.stop="onLinkClick">
         <mo-icon name="link" width="14" height="14" />
-      </i>
-      <i v-if="action ==='INFO'" @click.stop="onInfoClick">
-        <mo-icon name="info-circle" width="14" height="14" />
-      </i>
-    </li>
+      </li>
+      <el-tooltip :key="action" v-if="action ==='INFO'"
+        class="item"
+        effect="dark"
+        placement="top"
+        :disabled="!isActive"
+        :content="remainingTip"
+      >
+        <li class="task-item-action" @click.stop="onInfoClick">
+          <mo-icon name="info-circle" width="14" height="14" />
+        </li>
+      </el-tooltip>
+    </template>
   </ul>
 </template>
 
@@ -40,7 +48,8 @@
   import { TASK_STATUS } from '@shared/constants'
   import {
     checkTaskIsSeeder,
-    getTaskName
+    getTaskName,
+    timeFormat, timeRemaining
   } from '@shared/utils'
   import { getTaskFullPath } from '@/utils/native'
   import '@/components/Icons/task-start-line'
@@ -119,6 +128,28 @@
         const actions = taskActionsMap[taskStatus] || []
         const result = [...actions, ...taskCommonActions].reverse()
         return result
+      },
+      isActive () {
+        return this.task.status === TASK_STATUS.ACTIVE
+      },
+      remaining () {
+        const { totalLength, completedLength, downloadSpeed } = this.task
+        return timeRemaining(totalLength, completedLength, downloadSpeed)
+      },
+      remainingTip () {
+        const { isActive, remaining } = this
+        if (!isActive || !remaining) {
+          return null
+        }
+        return timeFormat(remaining, {
+              prefix: this.$t('task.remaining-prefix'),
+              i18n: {
+                gt1d: this.$t('app.gt1d'),
+                hour: this.$t('app.hour'),
+                minute: this.$t('app.minute'),
+                second: this.$t('app.second')
+              }
+            })
       }
     },
     methods: {
