@@ -122,7 +122,7 @@
     },
     methods: {
       buildAtom (zIndex) {
-        const { zoomSum, offset, atomWG, atomHG, columnCount, zoom, len } = this
+        const { zoomSum, offset, atomWG, atomHG, columnCount, zoom } = this
         const hIndex = zIndex + 1
         const chIndex = zIndex % columnCount
         const rhIndex = parseInt((zIndex / columnCount), 10)
