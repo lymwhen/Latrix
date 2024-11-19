@@ -1,4 +1,5 @@
 <template>
+  <!-- <div style="width: 300px; height: 100px">{{ offset }}, {{ atomWG }}, {{ atomHG }}, {{ columnCount }}, {{ rowCount }}, {{ len }} , {{ zoom }} </div> -->
   <svg version="1.1"
     xmlns="http://www.w3.org/2000/svg"
     class="svg-task-graphic"
@@ -52,6 +53,10 @@
       atomRadius: {
         type: Number,
         default: 2
+      },
+      rowCount: {
+        type: Number,
+        default: 15
       }
     },
     computed: {
@@ -69,10 +74,12 @@
         const result = parseInt((outerWidth - atomWidth) / atomWG, 10) + 1
         return result
       },
-      rowCount () {
-        const { len, columnCount } = this
-        const result = parseInt((len / columnCount), 10) + 1
-        return result
+      // bitfield表示了各个下载块的进度，每16KB被量化为15，存放在bitfield的一个字节中
+      // 文件太大时（超过2GB），块过多导致UI长时间渲染无响应
+      // 无论多大的文件都只放入rowCount*columnCount的网格中，一个格子表示的下载块数即为zoom
+      zoom () {
+        const { len, rowCount, columnCount } = this
+        return Math.max(Math.ceil(len / (rowCount * columnCount), 10), 1)
       },
       offset () {
         const { outerWidth, atomWidth, atomWG, columnCount } = this
@@ -94,38 +101,49 @@
         return `0 0 ${this.width} ${this.height}`
       },
       atoms () {
-        const { len, columnCount } = this
+        const { len, columnCount, zoom } = this
         const result = []
         let row = []
-        for (let i = 0; i < len; i++) {
-          row.push(this.buildAtom(i))
+        for (let i = 0; i < len; i += zoom) {
+          const zi = parseInt(i / zoom)
+          row.push(this.buildAtom(zi))
 
-          if ((i + 1) % columnCount === 0) {
+          if ((zi + 1) % columnCount === 0) {
             result.push(row)
             row = []
           }
         }
-        result.push(row)
+        if (row.length > 0) {
+          result.push(row)
+        }
 
         return result
       }
     },
     methods: {
-      buildAtom (index) {
-        const { bitfield, offset, atomWG, atomHG, columnCount } = this
-        const hIndex = index + 1
-        let chIndex = index % columnCount
-        let rhIndex = parseInt((index / columnCount), 10)
-        chIndex = chIndex < 0 ? 0 : chIndex
-        rhIndex = rhIndex < 0 ? 0 : rhIndex
+      buildAtom (zIndex) {
+        const { zoomSum, offset, atomWG, atomHG, columnCount, zoom, len } = this
+        const hIndex = zIndex + 1
+        const chIndex = zIndex % columnCount
+        const rhIndex = parseInt((zIndex / columnCount), 10)
         const result = {
           id: `${hIndex}`,
-          status: Math.floor(parseInt(bitfield[index], 16) / 4),
+          // 每个下载块被量化为15，所以对3求倍数，用5种颜色来表示，官方为4*4的组合，存在错误
+          status: Math.floor(zoomSum(zIndex) / (3 * zoom)),
           x: chIndex * atomWG,
           y: offset + rhIndex * atomHG
         }
 
         return result
+      },
+      // 每个zoom中的所有下载块量化值之和
+      zoomSum (zIndex) {
+        const { bitfield, zoom, len } = this
+        let sum = 0
+        for (let i = zIndex * zoom; i < Math.min((zIndex + 1) * zoom, len); i++) {
+          sum += parseInt(bitfield[i], 16)
+        }
+        return sum
       }
     }
   }

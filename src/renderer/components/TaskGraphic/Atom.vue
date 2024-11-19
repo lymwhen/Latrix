@@ -72,4 +72,8 @@
   fill: $--graphic-atom-color-4;
   outline: 1px solid $--graphic-atom-outline-color;
 }
+.graphic-atom-s5 {
+  fill: $--graphic-atom-color-5;
+  outline: 1px solid $--graphic-atom-outline-color;
+}
 </style>
