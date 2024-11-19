@@ -20,3 +20,13 @@
     padding: 5px 5px 5px 10px;
     opacity: .65;
 }
+
+.el-drawer__close-btn {
+    border-radius: 3px;
+    transition: $--all-transition;
+
+    &:hover {
+        color: #FFF;
+        background-color: #FF4081;
+    }
+}
