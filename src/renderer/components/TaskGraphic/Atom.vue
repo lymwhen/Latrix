@@ -51,6 +51,7 @@
 .graphic-atom {
   shape-rendering: geometricPrecision;
   outline-offset: -1px;
+  transition: fill .875s linear;
 }
 .graphic-atom-s0 {
   fill: $--graphic-atom-color-0;
