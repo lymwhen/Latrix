@@ -102,11 +102,12 @@
     position: absolute;
     left: 0;
     top: 0;
+    width: 0%;
     height: 100%;
     background-color: $--subnav-active-text-color;
     opacity: .1;
     z-index: -1;
-    transition: width .9s linear;
+    transition: width .875s linear;
   }
 }
 .task-item {
