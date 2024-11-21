@@ -42,7 +42,8 @@ let mainConfig = {
   plugins: [
     new Webpack.NoEmitOnErrorsPlugin(),
     new ESLintPlugin({
-      formatter: require('eslint-friendly-formatter')
+      formatter: require('eslint-friendly-formatter'),
+      cache: false
     })
   ],
   resolve: {

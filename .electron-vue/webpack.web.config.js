@@ -148,7 +148,8 @@ let webConfig = {
     new Webpack.NoEmitOnErrorsPlugin(),
     new ESLintPlugin({
       extensions: ['js', 'vue'],
-      formatter: require('eslint-friendly-formatter')
+      formatter: require('eslint-friendly-formatter'),
+      cache: false
     })
   ],
   output: {
