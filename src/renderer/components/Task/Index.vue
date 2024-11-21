@@ -52,6 +52,7 @@
     showItemInFolder,
     moveTaskFilesToTrash
   } from '@/utils/native'
+  import api from '@/api'
 
   export default {
     name: 'mo-content-task',
@@ -381,6 +382,26 @@
       handleShowTaskInfo (payload) {
         const { task } = payload
         this.$store.dispatch('task/showTaskDetail', task)
+      },
+      handleDownloadStart () {
+        if (this.status === 'active') {
+          return
+        }
+        this.$router.push({
+          path: '/task/active'
+        })
+      },
+      handleDownloadComplete () {
+        if (this.status !== 'active') {
+          return
+        }
+        api.fetchActiveTaskList({ keys: ['gid'] }).then(res => {
+          if (res.length === 0) {
+            this.$router.push({
+              path: '/task/stopped'
+            })
+          }
+        })
       }
     },
     created () {
@@ -397,6 +418,8 @@
       commands.on('batch-delete-task', this.handleBatchDeleteTask)
       commands.on('copy-task-link', this.handleCopyTaskLink)
       commands.on('show-task-info', this.handleShowTaskInfo)
+      api.client.on('onDownloadStart', this.handleDownloadStart)
+      api.client.on('onDownloadComplete', this.handleDownloadComplete)
     },
     destroyed () {
       commands.off('pause-task', this.handlePauseTask)
@@ -409,6 +432,8 @@
       commands.off('batch-delete-task', this.handleBatchDeleteTask)
       commands.off('copy-task-link', this.handleCopyTaskLink)
       commands.off('show-task-info', this.handleShowTaskInfo)
+      api.client.off('onDownloadStart', this.handleDownloadStart)
+      api.client.off('onDownloadComplete', this.handleDownloadComplete)
     }
   }
 </script>
