@@ -29,7 +29,7 @@
         class="item"
         effect="dark"
         placement="top"
-        :disabled="!isActive"
+        :disabled="!isActive || !remainingTip"
         :content="remainingTip"
       >
         <li class="task-item-action" @click.stop="onInfoClick">
