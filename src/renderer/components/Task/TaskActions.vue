@@ -65,6 +65,13 @@
         <mo-icon name="purge" width="14" height="14" />
       </i>
     </el-tooltip>
+    <i class="item task-action" @click="switchProxy"
+      :class="{selected: proxy.enable}"
+      effect="dark"
+      placement="bottom"
+      :title="switchTip">
+      <mo-icon name="la-proxy" width="14" height="14" />
+    </i>
   </div>
 </template>
 
@@ -81,6 +88,7 @@
   import '@/components/Icons/delete'
   import '@/components/Icons/purge'
   import '@/components/Icons/more'
+  import '@/components/Icons/la-proxy'
 
   export default {
     name: 'mo-task-actions',
@@ -96,7 +104,13 @@
       ...mapState('task', {
         currentList: state => state.currentList,
         selectedGidListCount: state => state.selectedGidList.length
-      })
+      }),
+      ...mapState('preference', {
+        proxy: state => state.config.proxy
+      }),
+      switchTip () {
+        return this.proxy.enable ? ('代理：' + this.proxy.server) : '点击开启代理'
+      }
     },
     filters: {
       bytesToSize,
@@ -154,6 +168,13 @@
       },
       onAddClick () {
         this.$store.dispatch('app/showAddTaskDialog', ADD_TASK_TYPE.URI)
+      },
+      switchProxy () {
+        const { proxy } = this
+        this.$store.dispatch('preference/save', { proxy: { enable: !proxy.enable, server: proxy.server, bypass: proxy.bypass, scope: proxy.scope } })
+          .then(() => {
+            this.$store.dispatch('app/fetchEngineOptions')
+          })
       }
     }
   }
@@ -180,11 +201,17 @@
     font-size: 0;
     cursor: pointer;
     outline: none;
+    >.mo-icon {
+      pointer-events: none;
+    }
     &:hover {
       color: $--task-action-hover-color;
     }
     &.disabled {
       color: $--task-action-disabled-color;
+    }
+    &.selected {
+      color: $--task-action-hover-color;
     }
   }
 }
