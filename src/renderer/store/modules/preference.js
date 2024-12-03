@@ -37,6 +37,7 @@ const actions = {
     })
   },
   save ({ dispatch }, config) {
+    console.log(config)
     dispatch('task/saveSession', null, { root: true })
     if (isEmpty(config)) {
       return
