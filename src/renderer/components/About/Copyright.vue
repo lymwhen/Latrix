@@ -48,9 +48,10 @@
 }
 
 .copyright-right {
+  display: flex;
   text-align: right;
   a {
-    margin-left: 30px;
+    flex: 1;
   }
 }
 </style>
